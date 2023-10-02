@@ -25,8 +25,7 @@
     <mat-card-title class="card-title inline"
                     [ngClass]="todo.done ? 'green' : 'pink'">{{todo.description}}</mat-card-title>
     <div class="todo-action">
-      <button *ngIf="todo.done" mat-button class="red" (click)="undoOrCompleteTodo(todo)">Undo</button>
-      <button *ngIf="!todo.done" mat-button class="green" (click)="undoOrCompleteTodo(todo)">Complete</button>
+      <button mat-button (click)="undoOrCompleteTodo(todo)">{{ todo.done ? 'Undo' : 'Complete' }}</button>
       <button mat-button class="coffee" (click)="deleteTodo(todo.id)">Delete</button>
     </div>
   </mat-card>
