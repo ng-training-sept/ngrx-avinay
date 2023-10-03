@@ -2,7 +2,7 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Todo } from './todo.model';
 import { FormControl, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
-import { deleteTodo, saveOrUpdateTodo } from './store/todo.actions';
+import { deleteTodo, fetchTodo, saveOrUpdateTodo } from './store/todo.actions';
 import { selectTodos } from './store/todo.selector';
 import { Subscription } from 'rxjs';
 
@@ -21,6 +21,8 @@ export class TodoComponent implements OnInit, OnDestroy {
   todoIdFormControl = new FormControl(null, [Validators.required]);
 
   ngOnInit(): void {
+    this.store.dispatch(fetchTodo());
+    // this.store.dispatch(fetchTodo());
     this.subscription = this.store.pipe(
       select(selectTodos)
     ).subscribe(todos => this.todos = todos);

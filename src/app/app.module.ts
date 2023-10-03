@@ -7,18 +7,26 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TodoModule } from './forms/todo/todo.module';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { todoReducer } from './forms/todo/store/todo.reducer';
+import { VoidComponent } from './forms/void/void.component';
+import { EffectsModule } from '@ngrx/effects';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { DemoInterceptor } from './interceptors/demo.interceptor';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, VoidComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    StoreModule.forRoot({todoState: todoReducer}, {}),
+    StoreModule.forRoot({}, {}),
     BrowserAnimationsModule,
     TodoModule,
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
+    HttpClientModule,
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    EffectsModule.forRoot([])
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: DemoInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
